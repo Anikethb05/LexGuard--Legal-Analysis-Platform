@@ -91,7 +91,7 @@ class LLMJudge:
             f'Important: data privacy laws, financial regulations, consumer protection laws, '
             f'AI regulations, and interoperability frameworks are ALWAYS relevant to fintech, '
             f'healthcare, and AI products. Never score these below 0.7 for such products. '
-            f'Reply JSON only: {{"relevant": true, "law_summary": "one sentence", "relevance_score": 0.85}}'
+            f'Reply JSON only: {{"relevant": true, "law_summary": "one sentence", "relevance_score": ACTUALLY_CALCULATE_0_TO_1_BASED_ON_PRODUCT_RELEVANCE}}'
         )
 
         for attempt in range(3):
@@ -110,7 +110,7 @@ class LLMJudge:
                     return self._make_result(chunk, {
                         "law_summary":    "Legal regulation relevant to this product domain.",
                         "document_name":  section_title or chunk.get("document_id", "Unknown Document"),
-                        "relevance_score": chunk.get("similarity_score", 0.5),
+                        "relevance_score": chunk.get("similarity_score", 0.7),
                     })
 
                 return self._make_result(chunk, parsed)
@@ -126,20 +126,20 @@ class LLMJudge:
                     return self._make_result(chunk, {
                         "law_summary":    "Legal regulation relevant to this product domain.",
                         "document_name":  section_title or chunk.get("document_id", "Unknown Document"),
-                        "relevance_score": chunk.get("similarity_score", 0.5),
+                        "relevance_score": chunk.get("similarity_score", 0.7),
                     })
 
         # Max retries — return chunk with fallback
         return self._make_result(chunk, {
             "law_summary":    "Legal regulation relevant to this product domain.",
             "document_name":  section_title or chunk.get("document_id", "Unknown Document"),
-            "relevance_score": chunk.get("similarity_score", 0.5),
+            "relevance_score": chunk.get("similarity_score", 0.7),
         })
 
     def _make_result(self, chunk: Dict, parsed: Dict) -> Dict:
         return {
             "relevant":        True,  # All chunks kept
-            "relevance_score": float(parsed.get("relevance_score", chunk.get("similarity_score", 0.5))),
+            "relevance_score": float(parsed.get("relevance_score", chunk.get("similarity_score", 0.7))),
             "law_summary":     parsed.get("law_summary", ""),
             "document_name": parsed.get("document_name", chunk.get("section_title", chunk.get("document_id", "Unknown"))),
             "source_section":  chunk.get("section_title", "Unknown"),
