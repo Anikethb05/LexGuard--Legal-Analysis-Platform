@@ -169,7 +169,7 @@ export default function LegalCopilotDashboard() {
               <p className="mb-2 inline-flex items-center rounded-full bg-[#edf5ed] px-3 py-1 text-xs font-semibold text-[#3f6b4b]">
                 Legal Intelligence Workspace
               </p>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">LexGuard Compliance Studio</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-slate-900">LexGuard Compliance Platform</h1>
               <p className="mt-2 text-sm text-slate-600">Upload your project, run legal feasibility analysis, and review policy relevance.</p>
             </div>
             <Link
